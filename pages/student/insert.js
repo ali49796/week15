@@ -1,7 +1,7 @@
-import { addDoc, collection } from 'firebase/firestore';
 import React, { useState } from 'react'
-import { db } from '../../firebase';
 import {useRouter} from 'next/router'
+import { database } from '../../firebase';
+import { addDoc, collection } from 'firebase/firestore';
 
 function InsertStudent() {
   
@@ -10,19 +10,17 @@ function InsertStudent() {
   
   const router = useRouter();
 
-  const databaseRef = collection(db, 'Students');
-
   const saveData = (e) => {
     e.preventDefault();
     
-    addDoc(databaseRef, {
+    addDoc(collection(database, 'students'), {
       name: name,
       marks: marks
     })
     .then(() => {
       alert('Data Saved');
       setName('');
-      setMarks("");
+      setMarks('');
     })
     .catch((err) => {
       console.log(err);
